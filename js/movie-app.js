@@ -1,6 +1,22 @@
 // https://glitch.com/different-northern-exhaust
 
 const moviesURL = "https://different-northern-exhaust.glitch.me/movies";
+const deleteOptions = {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+}
+// $('.delete-movie').on("click", function(){
+$(document).on("click", ".delete-movie", function(){
+    let movieID = $(this).attr('data-id');
+
+    fetch(moviesURL + "/" + movieID, deleteOptions).then(result => {
+        appendMovie();
+    });
+
+});
+
 // getMovie get each movie and display it in the page
 async function getMovies() {
     return await fetch(moviesURL)
@@ -9,33 +25,20 @@ async function getMovies() {
 }
 // getMovies();
 
-function appendMovie() {
+async function appendMovie() {
     $("#display-movies").html('');
-    getMovies().then(data => {
-        console.log(data);
-        data.forEach((movie) => {
-            $("#display-movies").append(`
-                <div class="">
-                    <img src="${movie.poster}" alt="" class="">
-                    <h3>${movie.title}</h3>
-                    <p>${movie.director}</p>
-                    <p>${movie.year}</p>
-                    <button id="delete-movie-${movie.id}" data-id="${movie.id}">Delete</button>
-                </div>
-            `)
-            $(`#delete-movie-${movie.id}`).on("click", function() {
-                const deleteOptions = {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
-
-                fetch(moviesURL + "/" + movie.id, deleteOptions).then(appendMovie());
-
-            });
-        });
-    })
+    let movies = await getMovies();
+    movies.forEach((movie) => {
+        $("#display-movies").append(`
+            <div class="">
+                <img src="${movie.poster}" alt="" class="">
+                <h3>${movie.title}</h3>
+                <p>${movie.director}</p>
+                <p>${movie.year}</p>
+                <button class="delete-movie" data-id="${movie.id}">Delete</button>
+            </div>
+        `)
+    });
 }
 appendMovie();
 
