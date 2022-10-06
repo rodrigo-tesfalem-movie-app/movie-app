@@ -10,23 +10,29 @@
     <link rel="stylesheet" href="css/movie-app.css">
 </head>
 <body>
-    <nav id="nav-bar">
-        <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-    </nav>
-    <main>
-        <div id="display-movies" class="d-flex flex-wrap"></div>
-        <form action="">
-            <input type="text" id="add-title" placeholder="add a title">
-            <input type="text" id="movie-director" placeholder="Enter director">
-            <input type="text" id="enter-rating" placeholder="Enter rating">
-            <button id="addNewMovie">Add Movie</button>
-        </form>
-    </main>
-<script src="js/jquery-3.6.1.min.js"></script>
-<script src="js/movie-app.js"></script>
+    <div class="main-wrapper">
+        <nav>
+          <h4>Codeup Movie App</h4>
+        </nav>
+        <div class="modal rounded">
+            <form action="">
+                <label for="poster-user-input" class="modal_title d-block">Enter Poster URL</label>
+                <input type="url" id="poster-user-input" class="d-block w-100">
+                <label for="add-title" class="modal_title d-block">Add a Title</label>
+                <input type="text" id="add-title" class="modal_input d-block w-100">
+                <label for="movie-director" class="modal_title d-block">Enter Director's Name</label>
+                <input type="text" id="movie-director" class="modal_input d-block w-100">
+                <label for="enter-rating" class="modal_title d-block">Enter Movie Rating</label>
+                <input type="text" id="enter-rating" class="modal_input d-block w-100">
+                <button id="submit-movie-button">Submit</button>
+            </form>
+        </div>
+        <main>
+            <div id="display-movies" class="d-flex flex-wrap justify-content-between"></div>
+        </main>
+    </div>
+
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/movie-app.js"></script>
 </body>
 </html>
