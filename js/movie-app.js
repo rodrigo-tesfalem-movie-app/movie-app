@@ -59,11 +59,11 @@ async function appendMovie() {
                     <div class="poster-img">
                         <img src="${movie.poster}" alt="movie poster" class="movie-poster-img">                
                     </div> 
-                    <h4>${movie.title}</h4>
-                    <p class="movie-director">${movie.director}</p>
-                    <p class="movie-year">${movie.year}</p>
-                    <div class="stars-outer"></div> 
-                    <p class="movie-rating stars-inner">${movie.rating}</p>   
+                    <h4 class="m-0">${movie.title}</h4>
+                    <p class="movie-director m-0">${movie.director}</p>
+                    <p class="movie-year m-0">${movie.year}</p>
+                    <div class="stars-outer m-0"></div> 
+                    <p class="movie-rating stars-inner m-0">${movie.rating}</p>   
                 </div>
                 <button class="edit-button" data-edit="${movie.id}">Edit</button>
                 <button class="delete-movie" data-id="${movie.id}">Delete</button>             
@@ -73,6 +73,8 @@ async function appendMovie() {
 }
 appendMovie();
 
+
+// ADDS STARS TO CARDS,
 const starsTotal = 5;
 let ratings;
 document.addEventListener('DOMContentLoaded', getRatings);
