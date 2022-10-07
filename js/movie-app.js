@@ -54,7 +54,7 @@ async function appendMovie() {
     // console.log(movies);
     movies.forEach((movie) => {
         $("#display-movies").append(`
-            <div class="movie-card-wrapper border border-2 my-5 text-center">  
+            <div class="movie-card-wrapper border border-2 my-5 text-center bg-secondary">  
                  <div class="movie-card">
                     <div class="poster-img">
                         <img src="${movie.poster}" alt="movie poster" class="movie-poster-img">                
@@ -66,7 +66,7 @@ async function appendMovie() {
                     <p class="movie-rating stars-inner m-0">${movie.rating}</p>   
                 </div>
                 <button class="edit-button" data-edit="${movie.id}">Edit</button>
-                <button class="delete-movie" data-id="${movie.id}">Delete</button>             
+                <button class="delete-movie mb-1" data-id="${movie.id}">Delete</button>             
             </div>            
         `)
     });
