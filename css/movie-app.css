@@ -1,5 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&display=swap');
+:root {
+    --darkblue-color: hsl(218, 23%, 16%);
+    --black-color: hsla(0, 0%, 10%, 0.3);
+}
 body {
-    /*color: white;*/
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: var(--darkblue-color);
+    color: cornsilk;
 }
 .main-wrapper {
     width: 95%;
@@ -12,10 +19,26 @@ body {
 .poster-img > img {
     width: 100%;
     height: 100%;
+    border-radius: 10px 10px 0 0;
 }
-
+.movie-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+}
 .movie-card:hover {
     cursor: pointer;
+}
+.edit-button, .delete-movie {
+    display: block;
+    padding: 3px 100px;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+.delete-movie {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 3px 120px;
 }
 .modal {
     position: fixed;
@@ -23,11 +46,11 @@ body {
     transform: translateY(-3rem);
     transition: opacity 0.2s ease-out 1s, transform 500ms ease-out 1s;
     z-index: 200;
-    top: 10%;
+    top: 12%;
     left: 30%;
     width: 50%;
     height: 300px;
-    background: lightslategrey;
+    background: var(--darkblue-color);
     color: white;
     padding: 1rem;
     border: 1px solid #ccc;

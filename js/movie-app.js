@@ -1,4 +1,3 @@
-// https://glitch.com/different-northern-exhaust
 let fetchMethod = "post";
 const moviesURL = "https://different-northern-exhaust.glitch.me/movies";
 const deleteOptions = {
@@ -7,7 +6,7 @@ const deleteOptions = {
         'Content-Type': 'application/json'
     }
 }
-// $('.delete-movie').on("click", function(){
+//
 $(document).on("click", ".delete-movie", function(){
     let movieID = $(this).attr('data-id');
 
@@ -15,10 +14,6 @@ $(document).on("click", ".delete-movie", function(){
         appendMovie();
     });
 
-});
-
-$(document).on('click', '.movie-card', function(){
-    displayModal("post");
 });
 
 // getMovie function gets each movie and display it in the page
@@ -34,6 +29,10 @@ function displayModal(method) {
     modal.classList.toggle('open');
 }
 
+$(document).on('click', '.add-movie-button', function(){
+    displayModal("post");
+});
+
 // $(selector).click(function() { ... });
 // $(document.body).on("click", "selector", function() { ... } );
 
@@ -43,24 +42,22 @@ async function appendMovie() {
     // console.log(movies);
     movies.forEach((movie) => {
         $("#display-movies").append(`
-            <div class="movie-card-wrapper border border-2">  
+            <div class="movie-card-wrapper">  
                  <div class="movie-card">
                     <div class="poster-img">
                         <img src="${movie.poster}" alt="movie poster" class="movie-poster-img">                
                     </div> 
-                    <h4>${movie.title}</h4>
-                    <p class="movie-director">${movie.director}</p>
-                    <p class="movie-year">${movie.year}</p>    
-                </div>
+                    <p class="text-center">${movie.title}</p>
+                    <p class="movie-director text-center">${movie.director}</p>
+                    <p class="movie-year text-center">${movie.year}</p>    
+                </div>          
                 <button class="edit-button" data-edit="${movie.id}">Edit</button>
-                <button class="delete-movie" data-id="${movie.id}">Delete</button>             
+                <button class="delete-movie" data-id="${movie.id}">Delete</button>                                         
             </div>            
         `)
     });
 }
 appendMovie();
-
-
 
 function addMovie () {
     $("#submit-movie-button").click(function(e) {
@@ -102,10 +99,6 @@ function addMovie () {
 }
 addMovie();
 
-
-// function editEventListener () {
-//     modal.classList.add('open');
-// }
 $(document).on("click", ".edit-button", function(){
     fetchMethod = "edit";
     modal.classList.add('open');
