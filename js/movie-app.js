@@ -7,6 +7,21 @@ const deleteOptions = {
         'Content-Type': 'application/json'
     }
 }
+
+// GETS EACH MOVIE FROM THE JSON
+async function getMovies() {
+    return await fetch(moviesURL)
+        .then(resp => resp.json())
+
+}
+
+// THE IN A DOM SELECTOR THAT ON CLICK OF THE ADD-MOVIE BUTTON WILL PULL UP A MODAL AND ALLOW THE USER TO ENTER THE
+// MOVIE DETAILS. DISPLAY-MODAL IS A FUNCTION WHICH DISPLAYS THE MENTIONED MODAL.
+$(document).on('click', '#addMovie', function(){
+    displayModal(fetchMethod);
+});
+
+
 // THIS IS A DOM SELECTOR THAT TARGETS THE BUTTON NAME DELETE-MOVIE
 // we use variable movieID to store the attribute data-id which is our movies id
 // we then fetch the moviesURl concatenating the movieID to it and then running the deleteOptions const to delete
@@ -21,18 +36,6 @@ $(document).on("click", ".delete-movie", function(){
 });
 
 
-// THE IN A DOM SELECTOR THAT ON CLICK OF THE ADD-MOVIE BUTTON WILL PULL UP A MODAL AND ALLOW THE USER TO ENTER THE
-// MOVIE DETAILS. DISPLAY-MODAL IS A FUNCTION WHICH DISPLAYS THE MENTIONED MODAL.
-$(document).on('click', '#addMovie', function(){
-    displayModal(fetchMethod);
-});
-
-// GETS EACH MOVIE FROM THE JSON
-async function getMovies() {
-    return await fetch(moviesURL)
-        .then(resp => resp.json())
-
-}
 
 //DOM SELECTOR THAT TARGETS THE MODAL AND STORES IT IN A VARIABLE, VARIABLE IS THEN USED IN
 // DISPLAY-MODAL FUNCTION AND SET TO OPEN
@@ -74,30 +77,31 @@ async function appendMovie() {
 appendMovie();
 
 
-// ADDS STARS TO CARDS,
+// ADDS STARS TO CARDS, EVENT LISTENER IS SET TO DOMCONTENTLOAD SO IT WAITS TILL THE DOM IS LOADED TO RUN, THEN THE ASYNC
+// MAKES THE FUNCTION WAIT UNTIL GET MOVIES IS RAN.
 const starsTotal = 5;
 let ratings;
-document.addEventListener('DOMContentLoaded', getRatings);
-function getRatings(){
-    for (let rating in ratings) {
-        let movies = getMovies();
+async function getRatings(){
+        let movies = await getMovies();
         movies.forEach((movie) => {
-             ratings = `${movie.rating}`;
-             const starPercentage = (ratings[rating]/starsTotal) * 100;
-            document.querySelector(`.${rating}.star-inner`).style.width = `${Math.round(starPercentage / 10) * 10}%`;
-        }); console.log(movies);
-    }
+             ratings = movie.rating;
+             const starPercentage = (ratings/starsTotal) * 100;
+            document.getElementsByClassName('.star-inner').width = `${Math.round(starPercentage / 10) * 10}%`;
+        });
 }
+getRatings()
 
+// ADDS MOVIES TO .JSON FILE USING POSTOPTIONS
 function addMovie () {
     $("#submit-movie-button").click(function(e) {
         e.preventDefault();
-
+        const $newMoviePoster = $('#poster-user-input').val();
         const $newMovieTitle = $("#add-title").val();
         const $movieDirector = $("#movie-director").val();
         const $movieRating = $("#enter-rating").val();
 
         const movieToPost = {
+            poster: $newMoviePoster,
             title: $newMovieTitle,
             director: $movieDirector,
             rating: $movieRating
@@ -116,6 +120,7 @@ function addMovie () {
             },
             body: JSON.stringify(movieToPost)
         }
+        // WILL CHECK TO SEE IF FETCH METHOD IS POST OR PATCH
         switch (fetchMethod) {
             case "post":
                 fetch(moviesURL, postOptions).then(getMovies);
@@ -130,9 +135,7 @@ function addMovie () {
 addMovie();
 
 
-// function editEventListener () {
-//     modal.classList.add('open');
-// }
+// EDIT BUTTON DEClARES THAT FETCH METHOD IS EDIT SO ADD MOVIE SWITCH CASE KNOWS THAT IT WILL RUN EDIT CASE
 $(document).on("click", ".edit-button", function(){
     fetchMethod = "edit";
     modal.classList.add('open');
@@ -141,7 +144,7 @@ $(document).on("click", ".edit-button", function(){
     let movieTitle = $parentCard.find('h4').text(),
         movieDirector = $parentCard.find('.movie-director').text(),
         moviePoster = $parentCard.find('.movie-poster-img').attr('src'),
-        movieYear = $parentCard.find('.movie-year').text();
+        movieYear = $parentCard.find('.movie-rating').text();
     $("#poster-user-input").val(moviePoster);
     $("#add-title").val(movieTitle);
     $("#movie-director").val(movieDirector);
