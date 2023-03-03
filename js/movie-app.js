@@ -79,6 +79,7 @@ appendMovie();
 
 // ADDS STARS TO CARDS, EVENT LISTENER IS SET TO DOMCONTENTLOAD SO IT WAITS TILL THE DOM IS LOADED TO RUN, THEN THE ASYNC
 // MAKES THE FUNCTION WAIT UNTIL GET MOVIES IS RAN.
+let starsInner = document.getElementsByClassName('.stars-inner')
 const starsTotal = 5;
 let ratings;
 async function getRatings(){
@@ -86,7 +87,7 @@ async function getRatings(){
         movies.forEach((movie) => {
              ratings = movie.rating;
              const starPercentage = (ratings/starsTotal) * 100;
-            document.getElementsByClassName('.star-inner').width = `${Math.round(starPercentage / 10) * 10}%`;
+           starsInner.style.width = `${Math.round(starPercentage / 10) * 10}%`;
         });
 }
 getRatings()
